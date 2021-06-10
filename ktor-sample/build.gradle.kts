@@ -11,7 +11,6 @@ plugins {
     application
     kotlin("plugin.serialization") version "1.5.0"
     kotlin("jvm") version "1.5.10"
-    id("org.jmailen.kotlinter") version "3.4.4"
 }
 
 group = "com.example"
@@ -27,7 +26,9 @@ application {
 //2. jcenter是一个由 bintray.com维护的Maven仓库。仓库地址 https://oss.sonatype.org/content/repositories/releases/
 //实际地址 https://repo1.maven.org/maven2
 repositories {
+    mavenLocal()
     jcenter()
+    maven("https://kotlin.bintray.com/ktor")
 
 }
 
@@ -35,7 +36,6 @@ dependencies {
     implementation("io.ktor:ktor-server-core:$ktor_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("org.jetbrains.kotlin:kotlin-serialization:1.5.10")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
     //添加exposed框架（SQL框架）
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
@@ -43,6 +43,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
     implementation("com.h2database:h2:$h2_version")
 
+    implementation("io.ktor:ktor-jackson:$ktor_version")
     //mysql依赖
     implementation ("mysql:mysql-connector-java:$mysql_version")
 

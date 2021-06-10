@@ -1,10 +1,9 @@
 package com.example.dryice.request
 
 
-import com.sun.xml.internal.ws.developer.Serialization
-import org.jetbrains.kotlin.com.google.gson.annotations.SerializedName
 import java.util.*
-
+import io.ktor.jackson.*
+import com.fasterxml.jackson.databind.*
 
 /**
  *
@@ -13,17 +12,12 @@ import java.util.*
  * @desc 实体类
  *
  **/
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class NewsRequest(
-    @SerializedName("id")
     val id : Int,
-    @SerializedName("title")
     val title: String,
-    @SerializedName("summary")
     val summary: String,
-    @SerializedName("date")
     val date: Date,
-    @SerializedName("imageUrl")
     val imageUrl: String,
 )
 

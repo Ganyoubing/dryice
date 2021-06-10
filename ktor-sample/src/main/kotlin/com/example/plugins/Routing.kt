@@ -11,7 +11,7 @@ import io.ktor.routing.*
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
-
+import io.ktor.jackson.*
 import io.ktor.http.content.*
 import io.ktor.request.*
 import io.ktor.response.*
@@ -20,13 +20,20 @@ import org.h2.util.json.JSONString
 import org.h2.util.json.JSONValue
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
-
-
+import io.ktor.jackson.*
+import com.fasterxml.jackson.databind.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.kotlin.com.google.gson.Gson
 
 
 fun Application.configureRouting() {
+
+    install(ContentNegotiation) {
+        jackson {
+            enable(SerializationFeature.INDENT_OUTPUT)
+        }
+    }
+
     val user = "ekuaibao"
     val password = "ZQQEnz4MA9AdPHkbgVWWHY"
     Database.connect(user = user,//连接数据库
@@ -34,8 +41,11 @@ fun Application.configureRouting() {
         url = "jdbc:mysql://192.168.1.129:3306/ekbX1",
         driver = "com.mysql.cj.jdbc.Driver")
     transaction {
+        //创建表
         SchemaUtils.create(com.example.dryice.tables.News)
     }
+
+
 
     // Starting point for a Ktor app:
     routing {
@@ -62,9 +72,9 @@ fun Application.configureRouting() {
                             content = it.content,
                             editor = it.editor
                         )
-                    }.toList()
+                    }
             }
-            call.respond(newsList.toString())
+            call.respond(newsList)
         }
 
         post("/news") {
@@ -82,6 +92,8 @@ fun Application.configureRouting() {
                     )
                 }
             }
+
+
             if (response != null) {
                 call.respond(newsRequest)
             } else {

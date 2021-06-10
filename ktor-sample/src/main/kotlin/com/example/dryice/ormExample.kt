@@ -1,5 +1,10 @@
 package com.example.dryice
 
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
+
+
 /**
  *
  * @author Gan YouBing
@@ -8,4 +13,6 @@ package com.example.dryice
  *
  **/
 class ormExample {
+
+
 }
